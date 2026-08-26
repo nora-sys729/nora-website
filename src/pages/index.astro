@@ -1,28 +1,43 @@
+```astro
 ---
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("writing");
 
-const sortedPosts = posts.sort(
+/*
+ * Featured article
+ * For now, this is your English version of
+ * "If Economics Is More Than Wealth..."
+ */
+const featuredPost = posts.find(
+	(post) => post.id === "economics-more-than-wealth/en"
+);
+
+/*
+ * Sort all articles by date, newest first.
+ */
+const sortedPosts = [...posts].sort(
 	(a, b) =>
 		new Date(b.data.date).getTime() -
 		new Date(a.data.date).getTime()
 );
 
-const featuredPost = sortedPosts[0];
-
-const getPostUrl = (id: string) => {
-	return `${import.meta.env.BASE_URL}writing/${id}/`;
-};
+/*
+ * Build article URLs.
+ * import.meta.env.BASE_URL makes this work both locally
+ * and on GitHub Pages under /nora-website/.
+ */
+const getPostUrl = (id: string) =>
+	`${import.meta.env.BASE_URL}writing/${id}/`;
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1"
@@ -41,6 +56,10 @@ const getPostUrl = (id: string) => {
 			<Header />
 
 			<main>
+				<!-- =========================
+				     HERO
+				     ========================= -->
+
 				<section class="hero">
 					<div>
 						<div class="eyebrow">NORA</div>
@@ -59,6 +78,10 @@ const getPostUrl = (id: string) => {
 					</div>
 				</section>
 
+				<!-- =========================
+				     FEATURED WRITING
+				     ========================= -->
+
 				{featuredPost && (
 					<section>
 						<div class="section-label">
@@ -76,10 +99,13 @@ const getPostUrl = (id: string) => {
 										{" · "}
 										{new Date(
 											featuredPost.data.date
-										).toLocaleDateString("en-US", {
-											year: "numeric",
-											month: "long",
-										})}
+										).toLocaleDateString(
+											"en-US",
+											{
+												year: "numeric",
+												month: "long",
+											}
+										)}
 									</div>
 
 									<div class="read">
@@ -100,6 +126,10 @@ const getPostUrl = (id: string) => {
 						</a>
 					</section>
 				)}
+
+				<!-- =========================
+				     ALL WRITING
+				     ========================= -->
 
 				<section>
 					<div class="section-label">
@@ -149,6 +179,10 @@ const getPostUrl = (id: string) => {
 					</div>
 				</section>
 
+				<!-- =========================
+				     TOPICS
+				     ========================= -->
+
 				<section>
 					<div class="section-label">
 						What I'm Exploring
@@ -156,23 +190,43 @@ const getPostUrl = (id: string) => {
 
 					<div class="topics">
 						<div class="topic">
-							<div class="topic-number">01</div>
-							<div class="topic-name">Economics</div>
+							<div class="topic-number">
+								01
+							</div>
+
+							<div class="topic-name">
+								Economics
+							</div>
 						</div>
 
 						<div class="topic">
-							<div class="topic-number">02</div>
-							<div class="topic-name">Technology</div>
+							<div class="topic-number">
+								02
+							</div>
+
+							<div class="topic-name">
+								Technology
+							</div>
 						</div>
 
 						<div class="topic">
-							<div class="topic-number">03</div>
-							<div class="topic-name">AI & Automation</div>
+							<div class="topic-number">
+								03
+							</div>
+
+							<div class="topic-name">
+								AI & Automation
+							</div>
 						</div>
 
 						<div class="topic">
-							<div class="topic-number">04</div>
-							<div class="topic-name">Economic Independence</div>
+							<div class="topic-number">
+								04
+							</div>
+
+							<div class="topic-name">
+								Economic Independence
+							</div>
 						</div>
 					</div>
 				</section>
@@ -182,3 +236,4 @@ const getPostUrl = (id: string) => {
 		</div>
 	</body>
 </html>
+```

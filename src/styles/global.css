@@ -283,6 +283,36 @@ footer {
 }
 
 .article-back,
+
+.article-navigation {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 70px;
+}
+
+.article-navigation .article-back {
+	margin-bottom: 0;
+}
+
+.article-language {
+	font-size: 0.8rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--muted);
+	transition: color 0.2s ease;
+}
+
+.article-language:hover {
+	color: var(--text);
+}
+
+@media (max-width: 700px) {
+	.article-navigation {
+		margin-bottom: 50px;
+	}
+}
+
 .article-language {
 	font-size: 12px;
 	letter-spacing: 0.08em;
